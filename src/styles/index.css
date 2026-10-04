@@ -1,0 +1,221 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base Layer ──────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    background: #0A0C10;
+    color: #F5F7FA;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: Anton, Impact, 'Arial Narrow Bold', sans-serif;
+    letter-spacing: 0.015em;
+    line-height: 1.05;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+
+  ::selection {
+    background: #E62429;
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 3px solid #00E5FF;
+    outline-offset: 2px;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0A0C10;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #E62429;
+    border: 2px solid #000;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #FF4D52;
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #E62429 #0A0C10;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+}
+
+/* ─── Component Layer ─────────────────────────────────────────────────────── */
+@layer components {
+
+  /* Halftone dot pattern */
+  .halftone {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1.2px, transparent 1.2px);
+    background-size: 12px 12px;
+  }
+
+  .halftone-red {
+    background-image: radial-gradient(rgba(230, 36, 41, 0.25) 1.2px, transparent 1.2px);
+    background-size: 8px 8px;
+  }
+
+  .halftone-fade {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1.2px, transparent 1.2px);
+    background-size: 12px 12px;
+    -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
+    mask-image: linear-gradient(to bottom, #000, transparent);
+  }
+
+  /* Comic border */
+  .comic-border {
+    border: 3px solid #000;
+  }
+
+  /* Comic card */
+  .comic-card {
+    @apply bg-ink-800 border-[3px] border-black shadow-comic transition-all duration-150 rounded-comic-lg overflow-hidden;
+    @apply hover:-translate-x-1 hover:-translate-y-1 hover:shadow-comic-lg;
+  }
+
+  /* Buttons */
+  .btn-comic {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full;
+    @apply font-cond font-bold uppercase tracking-wider text-sm;
+    @apply bg-gold text-ink border-[3px] border-black shadow-comic-sm;
+    @apply transition-all duration-150;
+    @apply active:translate-x-[3px] active:translate-y-[3px] active:shadow-none;
+    @apply hover:bg-gold-dark;
+    min-height: 44px;
+  }
+
+  .btn-comic-red {
+    @apply btn-comic bg-crimson text-stark hover:bg-crimson-light;
+  }
+
+  .btn-comic-ghost {
+    @apply btn-comic bg-transparent text-stark border-stark shadow-none;
+    @apply hover:bg-stark hover:text-ink;
+  }
+
+  /* Chip */
+  .chip {
+    @apply inline-flex items-center px-3 py-1.5 rounded-full;
+    @apply font-mono text-xs font-bold uppercase;
+    @apply bg-stark text-ink border-2 border-black shadow-comic-sm;
+    @apply hover:bg-vibranium transition-colors duration-150 cursor-pointer;
+    min-height: 44px;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-block px-2.5 py-0.5 rounded-full;
+    @apply font-mono text-[10px] font-bold uppercase tracking-widest;
+    @apply border-2 border-black;
+  }
+
+  /* Speech bubble */
+  .speech-bubble {
+    @apply relative rounded-comic bg-stark text-ink border-[3px] border-black p-3 font-comic tracking-wide;
+  }
+
+  .speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -14px;
+    left: 16px;
+    border-width: 14px 8px 0 8px;
+    border-style: solid;
+    border-color: #000 transparent transparent transparent;
+  }
+
+  .speech-bubble::before {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 19px;
+    border-width: 11px 5px 0 5px;
+    border-style: solid;
+    border-color: #F5F7FA transparent transparent transparent;
+    z-index: 1;
+  }
+
+  /* Starburst "burst" — 12-point star via clip-path */
+  .burst {
+    @apply font-comic tracking-wide;
+    clip-path: polygon(
+      50% 0%, 61% 35%, 98% 35%, 68% 57%,
+      79% 91%, 50% 70%, 21% 91%, 32% 57%,
+      2% 35%, 39% 35%
+    );
+  }
+
+  /* Section divider — diagonal stripe */
+  .section-divider {
+    height: 6px;
+    background-image: repeating-linear-gradient(
+      45deg,
+      #E62429 0,
+      #E62429 12px,
+      #0A0C10 12px,
+      #0A0C10 24px
+    );
+    border-top: 3px solid #000;
+    border-bottom: 3px solid #000;
+  }
+
+  /* Skip to content link (visually hidden until focused) */
+  .skip-link {
+    @apply absolute -top-full left-4 z-[9999] px-4 py-2;
+    @apply btn-comic focus:top-4;
+  }
+
+  /* Hide native scrollbar but keep scroll functionality */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ─── Utilities Layer ─────────────────────────────────────────────────────── */
+@layer utilities {
+  /* Marquee animation (announcement bar) */
+  @keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .animate-marquee {
+    animation: marquee 28s linear infinite;
+    will-change: transform;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee { animation: none; }
+  }
+}
+
